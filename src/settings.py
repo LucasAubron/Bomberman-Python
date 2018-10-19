@@ -1,0 +1,19 @@
+import pygame as pg
+
+#screen seetings
+DISPLAY_SIZE = 960
+FPS = 60
+TITLE = "Bomberman"
+
+#COLORS
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+RED = (255,0,0)
+GREEN = (0,255,0)
+BLUE = (0,0,255)
+GREY = (30,30,30)
+
+#GRID
+TILESIZE = 40
+GRID_COLOR = BLUE
+BG_COLOR = BLACK
