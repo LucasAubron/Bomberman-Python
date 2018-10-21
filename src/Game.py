@@ -16,17 +16,20 @@ class Game:
 		self.screen.fill(BG_COLOR)
 		self.clock = pg.time.Clock()
 		self.map = None
+		pg.key.set_repeat(30,100)
 		self.loadData()
 		self.new()
 
 	def new(self):
 		self.allSprites = pg.sprite.Group()
+		self.blocks = pg.sprite.Group()
+		self.players = pg.sprite.Group()
 		self.loadMap()
 		self.run()
 
 	def run(self):
 		while self.running:
-			self.clock.tick(FPS)
+			self.dt = self.clock.tick(FPS) / 100
 			self.events()
 			self.update()
 			self.draw()
@@ -36,14 +39,17 @@ class Game:
 			if event.type == pg.QUIT:
 				pg.quit()
 				quit()
+			if event.type == pg.KEYDOWN:
+				if event.key == pg.K_ESCAPE:
+					pg.quit()
+					quit()
 
 	def update(self):
 		self.allSprites.update()
 
 	def draw(self):
 		self.screen.fill(BG_COLOR)
-		for sprite in self.allSprites:
-			self.screen.blit(sprite.image, sprite.rect)
+		self.allSprites.draw(self.screen)
 		self.drawGrid()
 		pg.display.flip()
 
@@ -60,17 +66,17 @@ class Game:
 		# create new players, they have each a unique spawn location (first two parameters) and ID
 		for i in range (int(self.numberOfPlayers)):
 			if i == 0:
-				player1 = Player(self, 3*TILESIZE,3*TILESIZE,1)
+				self.player1 = Player(self, 3,3)
 			elif i == 1:
-				player2 = Player(self, 20*TILESIZE,20*TILESIZE,2)
+				self.player2 = Player(self, 20,20)
 			elif i == 2:
-				player3 = Player(self, 20*TILESIZE,3*TILESIZE,3)
+				self.player3 = Player(self, 20,3)
 			elif i == 3:
-				player4 = Player(self, 3*TILESIZE,20*TILESIZE,4)
+				self.player4 = Player(self, 3,20)
 		#load map with destructible blocks and inderstructible blocks
 		for row, tiles in enumerate(self.map.data):
 			for col, tile in enumerate(tiles):
 				if tile == "I":
-					IBlock(self, col * TILESIZE, row * TILESIZE)
+					IBlock(self, col, row)
 				if tile == "B":
-					Block(self, col * TILESIZE, row * TILESIZE)
+					Block(self, col, row)
