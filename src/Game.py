@@ -24,6 +24,8 @@ class Game:
 		self.allSprites = pg.sprite.Group()
 		self.blocks = pg.sprite.Group()
 		self.players = pg.sprite.Group()
+		self.bombs = pg.sprite.Group()
+		self.bombPos = []
 		self.loadMap()
 		self.run()
 

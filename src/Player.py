@@ -76,7 +76,11 @@ class Player(pg.sprite.Sprite):
 			self.rect.x, self.rect.y = self.x, self.y
 
 	def attack(self):
-		pass
+		bombx, bomby = self.rect.center.x//TILE_ON_LINE, self.rect.center.y//TILE_ON_LINE
+		if self.dropBomb and self.bomb>0:
+			Bomb(self, self.game, bombx, bomby)
+			self.bomb -= 1
+		self.dropBomb = False
 
 	def getKeys(self):
 		keys = pg.key.get_pressed()
