@@ -9,6 +9,7 @@ class IBlock(pg.sprite.Sprite):
 		self.game = game
 		self.image = IBLOCK_IMAGE
 		self.rect = self.image.get_rect()
-		self.x = xSpawn
-		self.y = ySpawn
-		self.rect.topleft = (self.x * TILESIZE, self.y * TILESIZE)
+		self.x = xSpawn * TILESIZE
+		self.y = ySpawn * TILESIZE
+		self.rect.topleft = (self.x, self.y)
+		self.game.IBlockPos.append([self.x, self.y])

@@ -4,6 +4,7 @@ from Player import Player
 from IBlock import IBlock
 from Block import Block
 from Map import Map
+from loadImage import *
 
 class Game:
 	def __init__(self):
@@ -25,7 +26,12 @@ class Game:
 		self.blocks = pg.sprite.Group()
 		self.players = pg.sprite.Group()
 		self.bombs = pg.sprite.Group()
+		self.items = pg.sprite.Group()
+		self.destructible = pg.sprite.Group()
+		self.destructibleAndDontBlockExplosion = pg.sprite.Group()
 		self.bombPos = []
+		self.IBlockPos = []
+		self.image = BG_IMAGE
 		self.loadMap()
 		self.run()
 
@@ -50,9 +56,9 @@ class Game:
 		self.allSprites.update()
 
 	def draw(self):
-		self.screen.fill(BG_COLOR)
-		self.allSprites.draw(self.screen)
+		self.screen.blit(BG_IMAGE, (0, 0))
 		self.drawGrid()
+		self.allSprites.draw(self.screen)
 		pg.display.flip()
 
 	def drawGrid(self):
@@ -68,13 +74,13 @@ class Game:
 		# create new players, they have each a unique spawn location (first two parameters) and ID
 		for i in range (int(self.numberOfPlayers)):
 			if i == 0:
-				self.player1 = Player(self, 3,3)
+				self.player1 = Player(self, 3,3,1)
 			elif i == 1:
-				self.player2 = Player(self, 20,20)
+				self.player2 = Player(self, 20,20,2)
 			elif i == 2:
-				self.player3 = Player(self, 20,3)
+				self.player3 = Player(self, 20,3,3)
 			elif i == 3:
-				self.player4 = Player(self, 3,20)
+				self.player4 = Player(self, 3,20,4)
 		#load map with destructible blocks and inderstructible blocks
 		for row, tiles in enumerate(self.map.data):
 			for col, tile in enumerate(tiles):
