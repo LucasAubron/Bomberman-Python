@@ -126,16 +126,31 @@ class Player(pg.sprite.Sprite):
 
 	def getKeys(self):
 		keys = pg.key.get_pressed()
-		if keys[pg.K_w]:
-			self.vy = -PLAYER_SPEED
-		if keys[pg.K_a]:
-			self.vx = -PLAYER_SPEED
-		if keys[pg.K_s]:
-			self.vy = PLAYER_SPEED
-		if keys[pg.K_d]:
-			self.vx = PLAYER_SPEED
-		if self.vx != 0 and self.vy != 0:
-			self.vx *= 0.7071
-			self.vy *= 0.7071
-		if keys[pg.K_SPACE]:
-			self.dropBomb = True
+		if self.id == 1:
+			if keys[pg.K_w]:
+				self.vy = -PLAYER_SPEED
+			if keys[pg.K_a]:
+				self.vx = -PLAYER_SPEED
+			if keys[pg.K_s]:
+				self.vy = PLAYER_SPEED
+			if keys[pg.K_d]:
+				self.vx = PLAYER_SPEED
+			if self.vx != 0 and self.vy != 0:
+				self.vx *= 0.7071
+				self.vy *= 0.7071
+			if keys[pg.K_SPACE]:
+				self.dropBomb = True
+		if self.id == 2:
+			if keys[pg.K_UP]:
+				self.vy = -PLAYER_SPEED
+			if keys[pg.K_LEFT]:
+				self.vx = -PLAYER_SPEED
+			if keys[pg.K_DOWN]:
+				self.vy = PLAYER_SPEED
+			if keys[pg.K_RIGHT]:
+				self.vx = PLAYER_SPEED
+			if self.vx != 0 and self.vy != 0:
+				self.vx *= 0.7071
+				self.vy *= 0.7071
+			if keys[pg.K_KP_ENTER]:
+				self.dropBomb = True
