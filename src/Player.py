@@ -15,7 +15,7 @@ class Player(pg.sprite.Sprite):
 		self.vx, self.vy = 0, 0
 		self.id = id 
 		self.dropBomb = False
-		self.bomb = 1
+		self.bomb = 10
 		self.bombPower = 1
 		self.lastUpdate = 0
 		self.lastDirection = (0, 0)
