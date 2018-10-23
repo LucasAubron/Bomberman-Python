@@ -1,6 +1,8 @@
 import pygame as pg
 from settings import *
 from loadImage import *
+from PowerUp import PowerUp
+import random
 
 class Block(pg.sprite.Sprite):
 	def __init__(self, game, xSpawn, ySpawn):
@@ -9,9 +11,12 @@ class Block(pg.sprite.Sprite):
 		self.game = game
 		self.image = BLOCK_IMAGE
 		self.rect = self.image.get_rect()
-		self.x = xSpawn
-		self.y = ySpawn
-		self.rect.topleft = (self.x * TILESIZE, self.y * TILESIZE)
+		self.x = xSpawn * TILESIZE
+		self.y = ySpawn * TILESIZE
+		self.rect.topleft = (self.x , self.y)
 
 	def getDestroyed(self):
 		self.kill()
+		if random.randint(0,1):
+			PowerUp(self.game, self.x, self.y)
+

@@ -17,19 +17,22 @@ class Bomb(pg.sprite.Sprite):
 		self.rect.topleft = (bombx * TILESIZE, bomby * TILESIZE)
 		self.game.bombPos.append([bombx, bomby])
 		self.timeOfBirth = pg.time.get_ticks()
+		self.canBecomeABlock = True #Otherwise the block would become an invisible block after it eploded
 
 	def update(self):
 		self.becomeBlock()
 		self.explode(False)
 
 	def becomeBlock(self):
-		if not pg.sprite.spritecollide(self, self.game.players, False):
+		if self.canBecomeABlock and not pg.sprite.spritecollide(self, self.game.players, False):
 			self.add(self.game.blocks)
+			self.canBecomeABlock = False
 	
 	def explode(self, triggeredByAnotherBomb):
 		now = pg.time.get_ticks()
 		if now - self.timeOfBirth > BOMB_CLOCK or triggeredByAnotherBomb:
 			self.game.bombPos.remove([self.bombx, self.bomby])
+			self.game.bombs.remove(self)
 			self.player.bomb += 1
 			self.kill()	
 			Explosion(self.game, self.bombx*TILESIZE, self.bomby*TILESIZE, self.power, "center")

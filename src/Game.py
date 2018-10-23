@@ -5,6 +5,7 @@ from IBlock import IBlock
 from Block import Block
 from Map import Map
 from loadImage import *
+import random
 
 class Game:
 	def __init__(self):
@@ -29,6 +30,7 @@ class Game:
 		self.items = pg.sprite.Group()
 		self.destructible = pg.sprite.Group()
 		self.destructibleAndDontBlockExplosion = pg.sprite.Group()
+		self.powerUp = pg.sprite.Group()
 		self.bombPos = []
 		self.IBlockPos = []
 		self.image = BG_IMAGE
@@ -57,8 +59,9 @@ class Game:
 
 	def draw(self):
 		self.screen.blit(BG_IMAGE, (0, 0))
-		self.drawGrid()
+		#self.drawGrid()
 		self.allSprites.draw(self.screen)
+		self.players.draw(self.screen)
 		pg.display.flip()
 
 	def drawGrid(self):
@@ -68,7 +71,8 @@ class Game:
 			pg.draw.line(self.screen, GRID_COLOR, (0,y),(DISPLAY_SIZE, y))
 
 	def loadData(self):
-		self.map = Map("map1.txt")
+		mapList = [Map("map1.txt")]
+		self.map = random.choice(mapList)
 
 	def loadMap(self):
 		# create new players, they have each a unique spawn location (first two parameters) and ID
