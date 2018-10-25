@@ -17,6 +17,5 @@ class Block(pg.sprite.Sprite):
 
 	def getDestroyed(self):
 		self.kill()
-		if random.randint(0,1):
-			PowerUp(self.game, self.x, self.y)
+		PowerUp(self.game, self.x, self.y)
 

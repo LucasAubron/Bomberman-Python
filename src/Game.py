@@ -19,7 +19,6 @@ class Game:
 		self.clock = pg.time.Clock()
 		self.map = None
 		pg.key.set_repeat(30,100)
-		self.loadData()
 		self.new()
 
 	def new(self):
@@ -34,6 +33,7 @@ class Game:
 		self.bombPos = []
 		self.IBlockPos = []
 		self.image = BG_IMAGE
+		self.loadData()
 		self.loadMap()
 		self.run()
 
@@ -56,6 +56,7 @@ class Game:
 
 	def update(self):
 		self.allSprites.update()
+		self.end()
 
 	def draw(self):
 		self.screen.blit(BG_IMAGE, (0, 0))
@@ -71,8 +72,13 @@ class Game:
 			pg.draw.line(self.screen, GRID_COLOR, (0,y),(DISPLAY_SIZE, y))
 
 	def loadData(self):
-		mapList = [Map("map1.txt")]
-		self.map = random.choice(mapList)
+		biggerMapPlanList = ["../Maps/24x24Maps/map1.txt","../Maps/24x24Maps/map2.txt"]
+		smallerMapPlanList = ["../Maps/16x16Maps/map1.txt"]
+		if mapIsBig:
+			self.mapPlan = random.choice(biggerMapPlanList)
+		else:
+			self.mapPlan = random.choice(smallerMapPlanList)
+		self.map = Map(self.mapPlan)
 
 	def loadMap(self):
 		# create new players, they have each a unique spawn location (first two parameters) and ID
@@ -92,3 +98,7 @@ class Game:
 					IBlock(self, col, row)
 				if tile == "B":
 					Block(self, col, row)
+
+	def end(self):
+		if len(self.players) <= 1:
+			self.running = False

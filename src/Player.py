@@ -15,8 +15,12 @@ class Player(pg.sprite.Sprite):
 		self.vx, self.vy = 0, 0
 		self.id = id 
 		self.dropBomb = False
-		self.bomb = 10
+		self.bomb = 1
 		self.bombPower = 1
+		self.roller = 0
+		self.maxBombPower = MAX_BOMB_POWER
+		self.maxBomb = MAX_BOMB
+		self.maxRoller = MAX_ROLLER
 		self.lastUpdate = 0
 		self.lastDirection = (0, 0)
 		self.currentFrame = 0
@@ -35,8 +39,10 @@ class Player(pg.sprite.Sprite):
 		self.setSpeedToZero("both")
 		
 	def move(self):
-		self.x += self.vx * self.game.dt
-		self.y += self.vy * self.game.dt
+		if self.vx !=0:
+			self.x += self.vx * (self.game.dt + (ROLLER_SPEED * self.roller / abs(self.vx)))
+		if self.vy !=0:
+			self.y += self.vy * (self.game.dt + (ROLLER_SPEED * self.roller / abs(self.vy)))
 
 	def collideWithWalls(self, dir):
 		hits = pg.sprite.spritecollide(self, self.game.blocks, False)

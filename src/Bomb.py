@@ -31,7 +31,10 @@ class Bomb(pg.sprite.Sprite):
 	def explode(self, triggeredByAnotherBomb):
 		now = pg.time.get_ticks()
 		if now - self.timeOfBirth > BOMB_CLOCK or triggeredByAnotherBomb:
-			self.game.bombPos.remove([self.bombx, self.bomby])
+			try:
+				self.game.bombPos.remove([self.bombx, self.bomby])
+			except:
+				pass
 			self.game.bombs.remove(self)
 			self.player.bomb += 1
 			self.kill()	
