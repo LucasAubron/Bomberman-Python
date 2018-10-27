@@ -26,13 +26,13 @@ TILE_ON_LINE = DISPLAY_SIZE/TILESIZE
 #GAME MOTOR----------------------------------------------------------------------------------
 
 #Player
-#Player's movement speed is calculated in pixel/ms so if the tile size change but the screen size doesn't, we need to make sure the player moves faster (for smaller map)
-PLAYER_SPEED = 15 if mapIsBig else 23
+#Player's movement speed is calculated in pixel/ms so if the tile rise but the screen size doesn't, we need to make sure the player moves faster so his tile/ms speed stays the same
+PLAYER_SPEED = 15 if mapIsBig else 22
 ANIMATION_TIME_TO_WAIT = 100
-MAX_BOMB_POWER = 12 if mapIsBig else 8
-MAX_BOMB = 12 if mapIsBig else 8
-MAX_ROLLER = 4 if mapIsBig else 3
-ROLLER_SPEED = 0.8
+MAX_BOMB_POWER = 12
+MAX_BOMB = 8
+MAX_ROLLER = 4
+ROLLER_SPEED = 0.8 if mapIsBig else 0.6
 
 #BOMB
 BOMB_CLOCK = 2500
@@ -41,7 +41,7 @@ EXPLOSION_CLOCK = 150
 #Loot
 CHANCE_ROLLER = 5
 CHANCE_POWERBOMB = 15
-CHANCE_BOMB_NUMBER = 15
+CHANCE_BOMB_NUMBER = 25
 CHANCE_TO_LOOT_NOTHING = 100 - CHANCE_POWERBOMB - CHANCE_ROLLER - CHANCE_BOMB_NUMBER
 
 #-------------------------------------------------------------------------------------------

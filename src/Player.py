@@ -1,17 +1,18 @@
 import pygame as pg
-from settings import *
-from loadImage import *
+from Settings import *
+import LoadImages
 from Bomb import Bomb
 from PowerUp import PowerUp
+import importlib
 
 class Player(pg.sprite.Sprite):
 	def __init__(self, game, xSpawn, ySpawn, id):
 		self.groups = game.allSprites, game.players, game.destructibleAndDontBlockExplosion
 		pg.sprite.Sprite.__init__(self, self.groups)
 		self.game = game
-		self.image = PLAYER_IMAGE
+		self.image = LoadImages.PLAYER_IMAGE
 		self.rect = self.image.get_rect()
-		self.x, self.y = xSpawn * TILESIZE, ySpawn * TILESIZE
+		self.x, self.y = xSpawn * self.game.tileSize, ySpawn * self.game.tileSize
 		self.vx, self.vy = 0, 0
 		self.id = id 
 		self.dropBomb = False
@@ -94,7 +95,7 @@ class Player(pg.sprite.Sprite):
 			self.rect.x, self.rect.y = self.x, self.y
 
 	def attack(self):
-		bombx, bomby = self.rect.center[0]//TILESIZE, self.rect.center[1]//TILESIZE
+		bombx, bomby = self.rect.center[0]//self.game.tileSize, self.rect.center[1]//self.game.tileSize
 		if self.dropBomb and self.bomb>0 and [bombx, bomby] not in self.game.bombPos:
 			Bomb(self, self.game, bombx, bomby)
 			self.bomb -= 1
@@ -105,30 +106,30 @@ class Player(pg.sprite.Sprite):
 		if now - self.lastUpdate > ANIMATION_TIME_TO_WAIT:
 			self.lastUpdate = now
 			if self.vx > 0:
-				self.currentFrame = (self.currentFrame + 1) % len(PLAYER_RIGHT)
-				self.image = PLAYER_RIGHT[self.currentFrame]
+				self.currentFrame = (self.currentFrame + 1) % len(LoadImages.PLAYER_RIGHT)
+				self.image = LoadImages.PLAYER_RIGHT[self.currentFrame]
 				self.lastDirection = (1, 0)
 			elif self.vx < 0:
-				self.currentFrame = (self.currentFrame + 1) % len(PLAYER_LEFT)
-				self.image = PLAYER_LEFT[self.currentFrame]
+				self.currentFrame = (self.currentFrame + 1) % len(LoadImages.PLAYER_LEFT)
+				self.image = LoadImages.PLAYER_LEFT[self.currentFrame]
 				self.lastDirection = (-1, 0)
 			elif self.vy > 0:
-				self.currentFrame = (self.currentFrame + 1) % len(PLAYER_FRONT)
-				self.image = PLAYER_FRONT[self.currentFrame]
+				self.currentFrame = (self.currentFrame + 1) % len(LoadImages.PLAYER_FRONT)
+				self.image = LoadImages.PLAYER_FRONT[self.currentFrame]
 				self.lastDirection = (0, 1)
 			elif self.vy < 0:
-				self.currentFrame = (self.currentFrame + 1) % len(PLAYER_BACK)
-				self.image = PLAYER_BACK[self.currentFrame]
+				self.currentFrame = (self.currentFrame + 1) % len(LoadImages.PLAYER_BACK)
+				self.image = LoadImages.PLAYER_BACK[self.currentFrame]
 				self.lastDirection = (0, -1)
 			else:
 				if self.lastDirection == (1,0):
-					self.image = PLAYER_RIGHT[0]
+					self.image = LoadImages.PLAYER_RIGHT[0]
 				elif self.lastDirection == (-1,0):
-					self.image = PLAYER_LEFT[0]
+					self.image = LoadImages.PLAYER_LEFT[0]
 				elif self.lastDirection == (0, 1):
-					self.image = PLAYER_FRONT[0]
+					self.image = LoadImages.PLAYER_FRONT[0]
 				elif self.lastDirection == (0, -1):
-					self.image = PLAYER_BACK[0]
+					self.image = LoadImages.PLAYER_BACK[0]
 
 	def getKeys(self):
 		keys = pg.key.get_pressed()
@@ -160,3 +161,6 @@ class Player(pg.sprite.Sprite):
 				self.vy *= 0.7071
 			if keys[pg.K_KP_ENTER]:
 				self.dropBomb = True
+
+	def refreshData(self):
+		importlib.reload(LoadImages)

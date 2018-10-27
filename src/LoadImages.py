@@ -1,5 +1,5 @@
 import pygame as pg
-from settings import *
+from Settings import *
 
 #Images are set for a 40 by 40 tiles game, which allow to display a 24x24 tiles map, howewer smaller map only contain 16x16 tiles but keep the same screen size, which mean the tile need to be expanded to 60 by 60
 
@@ -58,8 +58,7 @@ IBLOCK_IMAGE = pg.image.load('../Images/BlockImage/IBlock.png')
 #---------------------------------------------------------------------------------------------
 #Images get rescaled by 150% if the TILESIZE happens to be 60 and not 40
 #Player images are smaller to facilitate his movements on the map, his original size is 31x34 pixels
-
-if TILESIZE == 60:
+if not mapIsBig:
 	PLAYER_IMAGE = pg.transform.scale(PLAYER_IMAGE, (46,51))
 	P1 = pg.transform.scale(P1, (46,51))
 	P2 = pg.transform.scale(P2, (46,51))
@@ -92,7 +91,7 @@ if TILESIZE == 60:
 	EXPLY3 = pg.transform.scale(EXPLY3, (60, 60))
 	EXPLX1 = pg.transform.scale(EXPLX1, (60, 60))
 	EXPLX2 = pg.transform.scale(EXPLX2, (60, 60))
-	EXPLX3 = pg.transform.scale(EXPL3, (60, 60))
+	EXPLX3 = pg.transform.scale(EXPLX3, (60, 60))
 	EXPL1 = pg.transform.scale(EXPL1, (60, 60))
 	EXPL2 = pg.transform.scale(EXPL2, (60, 60))
 	EXPL3 = pg.transform.scale(EXPL3, (60, 60))
