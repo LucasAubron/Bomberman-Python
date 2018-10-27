@@ -161,6 +161,8 @@ class Player(pg.sprite.Sprite):
 				self.vy *= 0.7071
 			if keys[pg.K_KP_ENTER]:
 				self.dropBomb = True
+		#Player's movement speed is calculated in pixel/ms so if the tile rise but the screen size doesn't, we need to make sure the player moves faster so his tile/ms speed stays the same
+		if self.game.tileSize == 60: self.vx, self.vy = self.vx * 1.5, self.vy * 1.5
 
 	def refreshData(self):
 		importlib.reload(LoadImages)
