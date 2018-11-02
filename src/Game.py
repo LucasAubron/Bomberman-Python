@@ -9,6 +9,7 @@ from Bomb import Bomb
 from Explosion import Explosion
 from PowerUp import PowerUp
 from Map import Map
+from Bot import Bot
 import random
 
 
@@ -92,11 +93,11 @@ class Game:
 			if i == 0:
 				self.player1 = Player(self, 0, 0, 1)
 			elif i == 1:
-				self.player2 = Player(self, 23, 23, 2)
+				self.player2 = Bot(self, 23, 23, 2)
 			elif i == 2:
-				self.player3 = Player(self, 23, 0, 3)
+				self.player3 = Bot(self, 23, 0, 3)
 			elif i == 3:
-				self.player4 = Player(self, 0, 23, 4)
+				self.player4 = Bot(self, 0, 23, 4)
 		#load map with destructible blocks and inderstructible blocks
 		for row, tiles in enumerate(self.map.data):
 			for col, tile in enumerate(tiles):
