@@ -1,5 +1,5 @@
 import pygame as pg
-from Settings import *
+import Settings
 import LoadImages
 from PowerUp import PowerUp
 import importlib
@@ -12,8 +12,8 @@ class Block(pg.sprite.Sprite):
 		self.game = game
 		self.image = LoadImages.BLOCK_IMAGE
 		self.rect = self.image.get_rect()
-		self.x = xSpawn * game.tileSize
-		self.y = ySpawn * game.tileSize
+		self.x = xSpawn * Settings.TILESIZE
+		self.y = ySpawn * Settings.TILESIZE
 		self.rect.topleft = (self.x , self.y)
 
 	def getDestroyed(self):
@@ -21,5 +21,7 @@ class Block(pg.sprite.Sprite):
 		PowerUp(self.game, self.x, self.y)
 
 	def refreshData(self):
+		importlib.reload(Settings)
 		importlib.reload(LoadImages)
+
 

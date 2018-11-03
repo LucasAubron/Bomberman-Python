@@ -3,7 +3,7 @@ from Game import Game
 
 class Main:
 	def __init__(self):
-		game = Game()
+		game = Game(True) #boolean test
 		pg.quit()
 		quit()
 

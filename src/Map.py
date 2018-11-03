@@ -1,5 +1,5 @@
 import pygame as pg
-from Settings import *
+import Settings
 
 class Map:
 	def __init__(self,game, filename):
@@ -9,5 +9,8 @@ class Map:
 				self.data.append(line.strip())
 		self.tileWidth = len(self.data[0])
 		self.tileHeight = len(self.data)
-		self.width = self.tileWidth * game.tileSize
-		self.height = self.tileHeight * game.tileSize
+		self.width = self.tileWidth * Settings.TILESIZE
+		self.height = self.tileHeight * Settings.TILESIZE
+
+	def refreshData(self):
+		importlib.reload(Settings)

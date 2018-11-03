@@ -1,5 +1,5 @@
 import pygame as pg
-from Settings import *
+import Settings
 import LoadImages
 import importlib
 
@@ -10,11 +10,13 @@ class IBlock(pg.sprite.Sprite):
 		self.game = game
 		self.image = LoadImages.IBLOCK_IMAGE
 		self.rect = self.image.get_rect()
-		self.x = xSpawn * game.tileSize
-		self.y = ySpawn * game.tileSize
+		self.x = xSpawn * Settings.TILESIZE
+		self.y = ySpawn * Settings.TILESIZE
 		self.rect.topleft = (self.x, self.y)
 		self.game.IBlockPos.append([self.x, self.y])
 
 	def refreshData(self):
+		importlib.reload(Settings)
 		importlib.reload(LoadImages)
+
 

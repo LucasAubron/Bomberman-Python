@@ -27,12 +27,12 @@ TILE_ON_LINE = DISPLAY_SIZE/TILESIZE
 
 #Player
 
-PLAYER_SPEED = 14
+PLAYER_SPEED = 12
 ANIMATION_TIME_TO_WAIT = 100
-MAX_BOMB_POWER = 12
-MAX_BOMB = 8
-MAX_ROLLER = 4
-ROLLER_SPEED = 0.8 if mapIsBig else 0.6
+MAX_BOMB_POWER = 12 if mapIsBig else 8
+MAX_BOMB = 12 if mapIsBig else 8
+MAX_ROLLER = 4 if mapIsBig else 2
+ROLLER_SPEED = 0.8
 
 #BOMB
 BOMB_CLOCK = 2500
@@ -44,4 +44,7 @@ CHANCE_POWERBOMB = 15
 CHANCE_BOMB_NUMBER = 25
 CHANCE_TO_LOOT_NOTHING = 100 - CHANCE_POWERBOMB - CHANCE_ROLLER - CHANCE_BOMB_NUMBER
 
+#Bot
+
+TIME_BOT_WAIT = 800
 #-------------------------------------------------------------------------------------------

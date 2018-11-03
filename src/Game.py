@@ -14,10 +14,11 @@ import random
 
 
 class Game:
-	def __init__(self):
+	def __init__(self, isATest):
 		pg.init()
 		pg.mixer.init()
 		self.running = True
+		self.isATest = isATest
 		self.numberOfPlayers = input("Nombre de joueurs :")
 		self.screen = pg.display.set_mode([Settings.DISPLAY_SIZE, Settings.DISPLAY_SIZE])
 		pg.display.set_caption(Settings.TITLE)
@@ -39,7 +40,6 @@ class Game:
 		self.bombPos = []
 		self.IBlockPos = []
 		self.image = LoadImages.BG_IMAGE
-		self.tileSize = Settings.TILESIZE
 		self.loadData()
 		self.loadMap()
 		self.run()
@@ -67,7 +67,8 @@ class Game:
 
 	def draw(self):
 		self.screen.blit(LoadImages.BG_IMAGE, (0, 0))
-		#self.drawGrid()
+		if self.isATest:
+			self.drawGrid()
 		self.allSprites.draw(self.screen)
 		self.players.draw(self.screen)
 		pg.display.flip()
@@ -79,13 +80,16 @@ class Game:
 			pg.draw.line(self.screen, Settings.GRID_COLOR, (0,y),(Settings.DISPLAY_SIZE, y))
 
 	def loadData(self):
-		biggerMapPlanList = ["../Maps/24x24Maps/map1.txt","../Maps/24x24Maps/map2.txt"]
-		smallerMapPlanList = ["../Maps/16x16Maps/map1.txt"]
-		if Settings.mapIsBig:
-			self.mapPlan = random.choice(biggerMapPlanList)
-		else:
-			self.mapPlan = random.choice(smallerMapPlanList)
-		self.map = Map(self, self.mapPlan)
+		if self.isATest:
+			self.map = Map(self, "../Maps/testMap.txt")
+		else:	
+			biggerMapPlanList = ["../Maps/24x24Maps/map1.txt","../Maps/24x24Maps/map2.txt"]
+			smallerMapPlanList = ["../Maps/16x16Maps/map1.txt"]
+			if Settings.mapIsBig:
+				self.mapPlan = random.choice(biggerMapPlanList)
+			else:
+				self.mapPlan = random.choice(smallerMapPlanList)
+			self.map = Map(self, self.mapPlan)
 
 	def loadMap(self):
 		# create new players, they have each a unique spawn location (first two parameters) and ID
@@ -113,7 +117,7 @@ class Game:
 
 	def refreshData(self):
 		#When a new game is launched, the size of the map should be able to change so all map can spawn even if they don't have the same size as the first one
-		#So we reload settings so the Settings.TILESIZE can change (or not), if so then we reload LoadImages in each of the existing classes that have an image
+		#So we reload settings and images in every class.
 		#To do that we need to create one object of each and cal their refresh image, pretty ugly but can't find an other way arround
 		importlib.reload(Settings)
 		trashplayer = Player(self, 0, 0, 1) #Player is created alone because it needs a name in order to call him for the creation of a bomb
