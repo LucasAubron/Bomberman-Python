@@ -12,7 +12,6 @@ from Map import Map
 from Bot import Bot
 import random
 
-
 class Game:
 	def __init__(self, isATest):
 		pg.init()

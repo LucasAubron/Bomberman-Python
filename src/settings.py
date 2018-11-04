@@ -1,5 +1,6 @@
 import pygame as pg
-import random
+#Test ?
+isATest = True
 
 #screen seetings
 DISPLAY_SIZE = 960
@@ -17,7 +18,7 @@ GREY = (30,30,30)
 #GRID
 BIG_TILESIZE = 60
 SMALL_TILESIZE = 40
-TILESIZE = random.choice([BIG_TILESIZE, SMALL_TILESIZE])
+TILESIZE = 60 if isATest else random.choice([BIG_TILESIZE, SMALL_TILESIZE])
 mapIsBig = True if TILESIZE == 40 else False
 GRID_COLOR = GREY
 BG_COLOR = WHITE

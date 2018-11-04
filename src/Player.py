@@ -23,7 +23,7 @@ class Player(pg.sprite.Sprite):
 		self.maxBomb = Settings.MAX_BOMB
 		self.maxRoller = Settings.MAX_ROLLER
 		self.choice = 1000 #for bots
-		self.lastSavedPos = [self.x, self.y]#for bots
+		self.lastSavedPos = [self.x, self.y] #for bots
 		self.lastBotUpdate = 0 #for bots
 		self.lastUpdate = 0
 		self.lastDirection = (0, 0)
@@ -125,9 +125,9 @@ class Player(pg.sprite.Sprite):
 				self.image = LoadImages.PLAYER_BACK[self.currentFrame]
 				self.lastDirection = (0, -1)
 			else:
-				if self.lastDirection == (1,0):
+				if self.lastDirection == (1, 0):
 					self.image = LoadImages.PLAYER_RIGHT[0]
-				elif self.lastDirection == (-1,0):
+				elif self.lastDirection == (-1, 0):
 					self.image = LoadImages.PLAYER_LEFT[0]
 				elif self.lastDirection == (0, 1):
 					self.image = LoadImages.PLAYER_FRONT[0]
@@ -150,6 +150,7 @@ class Player(pg.sprite.Sprite):
 				self.vy *= 0.7071
 			if keys[pg.K_SPACE]:
 				self.dropBomb = True
+		'''		
 		if self.id == 2:
 			if keys[pg.K_UP]:
 				self.vy = -Settings.PLAYER_SPEED
@@ -164,6 +165,7 @@ class Player(pg.sprite.Sprite):
 				self.vy *= 0.7071
 			if keys[pg.K_KP_ENTER]:
 				self.dropBomb = True
+		'''		
 		#Player's movement speed is calculated in pixel/ms so if the tile rise but the screen size doesn't, we need to make sure the player moves faster so his tile/ms speed stays the same
 		if Settings.TILESIZE == 60: self.vx, self.vy = self.vx * 1.5, self.vy * 1.5
 
