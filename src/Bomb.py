@@ -1,5 +1,5 @@
 import pygame as pg
-import Settings
+import settings
 import LoadImages
 from Explosion import Explosion
 import importlib
@@ -15,7 +15,7 @@ class Bomb(pg.sprite.Sprite):
 		self.bombx = bombx
 		self.bomby = bomby
 		self.power = player.bombPower
-		self.rect.topleft = (bombx * Settings.TILESIZE, bomby * Settings.TILESIZE)
+		self.rect.topleft = (bombx * settings.TILESIZE, bomby * settings.TILESIZE)
 		self.game.bombPos.append([bombx, bomby])
 		self.timeOfBirth = pg.time.get_ticks()
 		self.canBecomeABlock = True #In order to prevent invisible blocks caused by destroyed bomb
@@ -31,7 +31,7 @@ class Bomb(pg.sprite.Sprite):
 	
 	def explode(self, triggeredByAnotherBomb):
 		now = pg.time.get_ticks()
-		if now - self.timeOfBirth > Settings.BOMB_CLOCK or triggeredByAnotherBomb:
+		if now - self.timeOfBirth > settings.BOMB_CLOCK or triggeredByAnotherBomb:
 			try:
 				self.game.bombPos.remove([self.bombx, self.bomby])
 			except:
@@ -39,8 +39,8 @@ class Bomb(pg.sprite.Sprite):
 			self.game.bombs.remove(self)
 			self.player.bomb += 1
 			self.kill()	
-			Explosion(self.game, self.bombx*Settings.TILESIZE, self.bomby*Settings.TILESIZE, self.power, "center")
+			Explosion(self.game, self.bombx*settings.TILESIZE, self.bomby*settings.TILESIZE, self.power, "center")
 
 	def refreshData(self):
-		importlib.reload(Settings)
+		importlib.reload(settings)
 		importlib.reload(LoadImages)

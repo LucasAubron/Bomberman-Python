@@ -1,6 +1,8 @@
 import pygame as pg
+import random
+
 #Test ?
-isATest = True
+isATest = False
 
 #screen seetings
 DISPLAY_SIZE = 960

@@ -1,5 +1,5 @@
 import pygame as pg
-from Settings import *
+from settings import *
 
 #Images are set for a 40 by 40 tiles game, which allow to display a 24x24 tiles map, howewer smaller map only contain 16x16 tiles but keep the same screen size, which mean the tile need to be expanded to 60 by 60
 

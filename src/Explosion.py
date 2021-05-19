@@ -1,5 +1,5 @@
 import pygame as pg
-import Settings
+import settings
 import LoadImages
 import importlib
 
@@ -34,16 +34,16 @@ class Explosion(pg.sprite.Sprite):
 			#four for to let explosion spread and collide in the 4 directions
 			for i in range (1, reach + 1):
 				#check if the explosion can spread to the next tile, in other word, check if the next tile is already occupied by an indestructible block or not
-				if [self.posx + (i * Settings.TILESIZE), self.posy] not in self.game.IBlockPos:
+				if [self.posx + (i * settings.TILESIZE), self.posy] not in self.game.IBlockPos:
 					#check collide between explosion and desructible sprites that don't stop the explosion (items and players) and destroy them immediatly
-					pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * Settings.TILESIZE), self.posy, 0,'x'), self.game.destructibleAndDontBlockExplosion, True)
+					pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * settings.TILESIZE), self.posy, 0,'x'), self.game.destructibleAndDontBlockExplosion, True)
 					#check collide between explosion and destructible sprites that stop the explosion (destructible blocks) and stop the explosion in this direction, doesn't kill immediatly the  sprite, a getDestroyed method is called instead so the blocks can drop item
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * Settings.TILESIZE), self.posy, 0,'x'), self.game.destructible, False)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * settings.TILESIZE), self.posy, 0,'x'), self.game.destructible, False)
 					if hit:
 						hit[0].getDestroyed()
 						break
 					#check collide between explosion and bombs
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * Settings.TILESIZE), self.posy, 0,'x'), self.game.bombs, False)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (i * settings.TILESIZE), self.posy, 0,'x'), self.game.bombs, False)
 					#make bomb hit explode, triggering a chain reaction
 					if hit:
 						hit[0].explode(True)
@@ -52,37 +52,37 @@ class Explosion(pg.sprite.Sprite):
 					break
 			#And repeat 3 times ...
 			for i in range (1, reach + 1):
-				if [self.posx + (-i * Settings.TILESIZE), self.posy] not in self.game.IBlockPos:
-					pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * Settings.TILESIZE), self.posy, 0,'x'), self.game.destructibleAndDontBlockExplosion, True)
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * Settings.TILESIZE), self.posy, 0,'x'), self.game.destructible, False)
+				if [self.posx + (-i * settings.TILESIZE), self.posy] not in self.game.IBlockPos:
+					pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * settings.TILESIZE), self.posy, 0,'x'), self.game.destructibleAndDontBlockExplosion, True)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * settings.TILESIZE), self.posy, 0,'x'), self.game.destructible, False)
 					if hit:
 						hit[0].getDestroyed()
 						break
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * Settings.TILESIZE), self.posy, 0,'x'), self.game.bombs, False)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx + (-i * settings.TILESIZE), self.posy, 0,'x'), self.game.bombs, False)
 					if hit:
 						hit[0].explode(True)
 				else:
 					break
 			for j in range (1, reach + 1):
-				if [self.posx, self.posy + (j * Settings.TILESIZE)] not in self.game.IBlockPos:
-					pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * Settings.TILESIZE), 0,'y'), self.game.destructibleAndDontBlockExplosion, True)
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * Settings.TILESIZE), 0,'y'), self.game.destructible, False)
+				if [self.posx, self.posy + (j * settings.TILESIZE)] not in self.game.IBlockPos:
+					pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * settings.TILESIZE), 0,'y'), self.game.destructibleAndDontBlockExplosion, True)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * settings.TILESIZE), 0,'y'), self.game.destructible, False)
 					if hit:
 						hit[0].getDestroyed()
 						break
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * Settings.TILESIZE), 0,'y'), self.game.bombs, False)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (j * settings.TILESIZE), 0,'y'), self.game.bombs, False)
 					if hit:
 						hit[0].explode(True)
 				else:
 					break
 			for j in range (1, reach + 1):
-				if [self.posx, self.posy + (-j * Settings.TILESIZE)] not in self.game.IBlockPos:
-					pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * Settings.TILESIZE), 0,'y'), self.game.destructibleAndDontBlockExplosion, True)
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * Settings.TILESIZE), 0,'y'), self.game.destructible, False)
+				if [self.posx, self.posy + (-j * settings.TILESIZE)] not in self.game.IBlockPos:
+					pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * settings.TILESIZE), 0,'y'), self.game.destructibleAndDontBlockExplosion, True)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * settings.TILESIZE), 0,'y'), self.game.destructible, False)
 					if hit:
 						hit[0].getDestroyed()
 						break
-					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * Settings.TILESIZE), 0,'y'), self.game.bombs, False)
+					hit = pg.sprite.spritecollide(Explosion(self.game, self.posx, self.posy + (-j * settings.TILESIZE), 0,'y'), self.game.bombs, False)
 					if hit:
 						hit[0].explode(True)
 				else:
@@ -94,12 +94,12 @@ class Explosion(pg.sprite.Sprite):
 
 	def die(self):
 		now = pg.time.get_ticks()
-		if now - self.timeOfBirth > Settings.EXPLOSION_CLOCK:
+		if now - self.timeOfBirth > settings.EXPLOSION_CLOCK:
 			self.kill()
 
 	def animate(self):
 		now = pg.time.get_ticks()
-		if now - self.lastUpdate > Settings.EXPLOSION_CLOCK/3:
+		if now - self.lastUpdate > settings.EXPLOSION_CLOCK/3:
 			self.lastUpdate = now
 			self.currentFrame += 1
 			try:
@@ -113,5 +113,5 @@ class Explosion(pg.sprite.Sprite):
 				pass
 
 	def refreshData(self):
-		importlib.reload(Settings)		
+		importlib.reload(settings)		
 		importlib.reload(LoadImages)

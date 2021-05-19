@@ -1,5 +1,5 @@
 import pygame as pg
-import Settings
+import settings
 from Game import Game
 
 class Main:
@@ -8,4 +8,4 @@ class Main:
 		pg.quit()
 		quit()
 
-m = Main(Settings.isATest)
+m = Main(settings.isATest)

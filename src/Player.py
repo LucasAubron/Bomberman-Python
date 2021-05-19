@@ -1,5 +1,5 @@
 import pygame as pg
-import Settings
+import settings
 import LoadImages
 from Bomb import Bomb
 from PowerUp import PowerUp
@@ -12,16 +12,16 @@ class Player(pg.sprite.Sprite):
 		self.game = game
 		self.image = LoadImages.PLAYER_IMAGE
 		self.rect = self.image.get_rect()
-		self.x, self.y = xSpawn * Settings.TILESIZE, ySpawn * Settings.TILESIZE
+		self.x, self.y = xSpawn * settings.TILESIZE, ySpawn * settings.TILESIZE
 		self.vx, self.vy = 0, 0
 		self.id = id 
 		self.dropBomb = False
 		self.bomb = 1
 		self.bombPower = 1
 		self.roller = 0
-		self.maxBombPower = Settings.MAX_BOMB_POWER
-		self.maxBomb = Settings.MAX_BOMB
-		self.maxRoller = Settings.MAX_ROLLER
+		self.maxBombPower = settings.MAX_BOMB_POWER
+		self.maxBomb = settings.MAX_BOMB
+		self.maxRoller = settings.MAX_ROLLER
 		self.choice = 1000 #for bots
 		self.lastSavedPos = [self.x, self.y] #for bots
 		self.lastBotUpdate = 0 #for bots
@@ -44,9 +44,9 @@ class Player(pg.sprite.Sprite):
 		
 	def move(self):
 		if self.vx !=0:
-			self.x += self.vx * (self.game.dt + (Settings.ROLLER_SPEED * self.roller / abs(self.vx)))
+			self.x += self.vx * (self.game.dt + (settings.ROLLER_SPEED * self.roller / abs(self.vx)))
 		if self.vy !=0:
-			self.y += self.vy * (self.game.dt + (Settings.ROLLER_SPEED * self.roller / abs(self.vy)))
+			self.y += self.vy * (self.game.dt + (settings.ROLLER_SPEED * self.roller / abs(self.vy)))
 
 	def collideWithWalls(self, dir):
 		hits = pg.sprite.spritecollide(self, self.game.blocks, False)
@@ -66,12 +66,12 @@ class Player(pg.sprite.Sprite):
 			self.updatePosition('y')
 
 	def collideWithBorder(self):
-		if self.x > Settings.DISPLAY_SIZE - self.rect.width:
-			self.x = Settings.DISPLAY_SIZE - self.rect.width
+		if self.x > settings.DISPLAY_SIZE - self.rect.width:
+			self.x = settings.DISPLAY_SIZE - self.rect.width
 		if self.x < 0:
 			self.x = 0
-		if self.y > Settings.DISPLAY_SIZE - self.rect.height:
-			self.y = Settings.DISPLAY_SIZE - self.rect.height
+		if self.y > settings.DISPLAY_SIZE - self.rect.height:
+			self.y = settings.DISPLAY_SIZE - self.rect.height
 		if self.y < 0:
 			self.y = 0
 		self.updatePosition("both")		
@@ -98,7 +98,7 @@ class Player(pg.sprite.Sprite):
 			self.rect.x, self.rect.y = self.x, self.y
 
 	def attack(self):
-		bombx, bomby = self.rect.center[0]//Settings.TILESIZE, self.rect.center[1]//Settings.TILESIZE
+		bombx, bomby = self.rect.center[0]//settings.TILESIZE, self.rect.center[1]//settings.TILESIZE
 		if self.dropBomb and self.bomb>0 and [bombx, bomby] not in self.game.bombPos:
 			Bomb(self, self.game, bombx, bomby)
 			self.bomb -= 1
@@ -106,7 +106,7 @@ class Player(pg.sprite.Sprite):
 
 	def animate(self):
 		now = pg.time.get_ticks()
-		if now - self.lastUpdate > Settings.ANIMATION_TIME_TO_WAIT:
+		if now - self.lastUpdate > settings.ANIMATION_TIME_TO_WAIT:
 			self.lastUpdate = now
 			if self.vx > 0:
 				self.currentFrame = (self.currentFrame + 1) % len(LoadImages.PLAYER_RIGHT)
@@ -138,13 +138,13 @@ class Player(pg.sprite.Sprite):
 		keys = pg.key.get_pressed()
 		if self.id == 1:
 			if keys[pg.K_w]:
-				self.vy = -Settings.PLAYER_SPEED
+				self.vy = -settings.PLAYER_SPEED
 			if keys[pg.K_a]:
-				self.vx = -Settings.PLAYER_SPEED
+				self.vx = -settings.PLAYER_SPEED
 			if keys[pg.K_s]:
-				self.vy = Settings.PLAYER_SPEED
+				self.vy = settings.PLAYER_SPEED
 			if keys[pg.K_d]:
-				self.vx = Settings.PLAYER_SPEED
+				self.vx = settings.PLAYER_SPEED
 			if self.vx != 0 and self.vy != 0:
 				self.vx *= 0.7071
 				self.vy *= 0.7071
@@ -153,13 +153,13 @@ class Player(pg.sprite.Sprite):
 		'''		
 		if self.id == 2:
 			if keys[pg.K_UP]:
-				self.vy = -Settings.PLAYER_SPEED
+				self.vy = -settings.PLAYER_SPEED
 			if keys[pg.K_LEFT]:
-				self.vx = -Settings.PLAYER_SPEED
+				self.vx = -settings.PLAYER_SPEED
 			if keys[pg.K_DOWN]:
-				self.vy = Settings.PLAYER_SPEED
+				self.vy = settings.PLAYER_SPEED
 			if keys[pg.K_RIGHT]:
-				self.vx = Settings.PLAYER_SPEED
+				self.vx = settings.PLAYER_SPEED
 			if self.vx != 0 and self.vy != 0:
 				self.vx *= 0.7071
 				self.vy *= 0.7071
@@ -167,8 +167,8 @@ class Player(pg.sprite.Sprite):
 				self.dropBomb = True
 		'''		
 		#Player's movement speed is calculated in pixel/ms so if the tile rise but the screen size doesn't, we need to make sure the player moves faster so his tile/ms speed stays the same
-		if Settings.TILESIZE == 60: self.vx, self.vy = self.vx * 1.5, self.vy * 1.5
+		if settings.TILESIZE == 60: self.vx, self.vy = self.vx * 1.5, self.vy * 1.5
 
 	def refreshData(self):
-		importlib.reload(Settings)
+		importlib.reload(settings)
 		importlib.reload(LoadImages)

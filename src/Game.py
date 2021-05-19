@@ -1,5 +1,5 @@
 import pygame as pg
-import Settings
+import settings
 import LoadImages
 import importlib
 from Player import Player
@@ -18,10 +18,10 @@ class Game:
 		pg.mixer.init()
 		self.running = True
 		self.isATest = isATest
-		self.numberOfPlayers = input("Nombre de joueurs :")
-		self.screen = pg.display.set_mode([Settings.DISPLAY_SIZE, Settings.DISPLAY_SIZE])
-		pg.display.set_caption(Settings.TITLE)
-		self.screen.fill(Settings.BG_COLOR)
+		self.numberOfPlayers = int(input("Nombre de joueurs :"))
+		self.screen = pg.display.set_mode([settings.DISPLAY_SIZE, settings.DISPLAY_SIZE])
+		pg.display.set_caption(settings.TITLE)
+		self.screen.fill(settings.BG_COLOR)
 		self.clock = pg.time.Clock()
 		self.map = None
 		pg.key.set_repeat(30,100)
@@ -45,7 +45,7 @@ class Game:
 
 	def run(self):
 		while self.running:
-			self.dt = self.clock.tick(Settings.FPS) / 100
+			self.dt = self.clock.tick(settings.FPS) / 100
 			self.events()
 			self.update()
 			self.draw()
@@ -73,10 +73,10 @@ class Game:
 		pg.display.flip()
 
 	def drawGrid(self):
-		for x in range(0, Settings.DISPLAY_SIZE, Settings.TILESIZE):
-			pg.draw.line(self.screen, Settings.GRID_COLOR, (x,0),(x, Settings.DISPLAY_SIZE))
-		for y in range(0, Settings.DISPLAY_SIZE, Settings.TILESIZE):
-			pg.draw.line(self.screen, Settings.GRID_COLOR, (0,y),(Settings.DISPLAY_SIZE, y))
+		for x in range(0, settings.DISPLAY_SIZE, settings.TILESIZE):
+			pg.draw.line(self.screen, settings.GRID_COLOR, (x,0),(x, settings.DISPLAY_SIZE))
+		for y in range(0, settings.DISPLAY_SIZE, settings.TILESIZE):
+			pg.draw.line(self.screen, settings.GRID_COLOR, (0,y),(settings.DISPLAY_SIZE, y))
 
 	def loadData(self):
 		if self.isATest:
@@ -84,7 +84,7 @@ class Game:
 		else:	
 			biggerMapPlanList = ["../Maps/24x24Maps/map1.txt","../Maps/24x24Maps/map2.txt"]
 			smallerMapPlanList = ["../Maps/16x16Maps/map1.txt"]
-			if Settings.mapIsBig:
+			if settings.mapIsBig:
 				self.mapPlan = random.choice(biggerMapPlanList)
 			else:
 				self.mapPlan = random.choice(smallerMapPlanList)
@@ -92,7 +92,7 @@ class Game:
 
 	def loadMap(self):
 		# create new players, they have each a unique spawn location (first two parameters) and ID
-		for i in range (int(self.numberOfPlayers)):
+		for i in range (self.numberOfPlayers):
 			if i == 0:
 				self.player1 = Player(self, 0, 0, 1)
 			elif i == 1:
@@ -110,7 +110,7 @@ class Game:
 					Block(self, col, row)
 
 	def end(self):
-		if len(self.players) <= 1:
+		if len(self.players) <= 0:
 			self.refreshData()
 			self.new()
 
@@ -118,7 +118,7 @@ class Game:
 		#When a new game is launched, the size of the map should be able to change so all map can spawn even if they don't have the same size as the first one
 		#So we reload settings and images in every class.
 		#To do that we need to create one object of each and cal their refresh image, pretty ugly but can't find an other way arround
-		importlib.reload(Settings)
+		importlib.reload(settings)
 		trashplayer = Player(self, 0, 0, 1) #Player is created alone because it needs a name in order to call him for the creation of a bomb
 		allKindOfSprites = [trashplayer, Bomb(trashplayer, self, 0, 0), Explosion(self, 0, 0, 0, ""), Block(self, 0, 0), IBlock(self, 0, 0), PowerUp(self, 0, 0)]
 		for object in allKindOfSprites:
